@@ -5,6 +5,7 @@ from urllib.request import urlopen
 
 
 class ZabbixApi():
+
     def __init__(self, url=None, user=None, password=None, version=False):
         url = url or "http://localhost"
         user = user or "Admin"
@@ -32,10 +33,7 @@ class ZabbixApi():
         """
         op = op or 'template.get'
         flag = False
-        ops = {
-            'template.get': 'template.get',
-            'hostgroup.get': 'hostgroup.get'
-        }
+        ops = {'template.get': 'template.get', 'hostgroup.get': 'hostgroup.get'}
         if op not in ops:
             raise ZabbixTemplateError("%s 不是合法api操作" % op)
         _filter = _filter or []
@@ -47,11 +45,11 @@ class ZabbixApi():
         results = json.loads(res).get('result', None)
         if not results:
             return
-        ids = {x.get('name', None): x.get('groupid', None)
-               for x in results} if flag else {
-                   x.get('name', None): x.get('templateid', None)
-                   for x in results
-               }
+        ids = {
+            x.get('name', None): x.get('groupid', None) for x in results
+        } if flag else {
+            x.get('name', None): x.get('templateid', None) for x in results
+        }
 
         return ids
 
@@ -72,10 +70,7 @@ class ZabbixApi():
         host_ids = [x.get('hostid') for x in res.get('result')]
         return host_ids
 
-    def config_export(self,
-                      ids: list = [],
-                      obj="",
-                      fmt='xml',
+    def config_export(self, ids: list = [], obj="", fmt='xml',
                       write_file=False) -> str:
         """
         @param ids: 接收一个列表, 并且列表中的id都为字符串
@@ -115,7 +110,7 @@ class ZabbixApi():
         options = {"groups": "groupid", "hosts": "hostid"}
         params = {"templates": ids, options[option]: link_to}
         res = self.do_request('template.massadd', params=params)
-        print(res)
+        return json.loads(res).get('result')
 
     def template_delete_by_name(self, name: list = []) -> dict:
         """
@@ -186,10 +181,11 @@ class ZabbixApi():
 
 
 if __name__ == '__main__':
-    zapi = ZabbixApi('http://172.20.6.112', 'Admin', 'zabbix')
+    zapi = ZabbixApi('http://127.0.0.1', 'Admin', 'zabbix')
     #  res = zapi.templateID_by_name('template.get', ['Template OS Windows'])
-    zapi.template_mass_op(
+    res = zapi.template_mass_op(
         option="hosts",
         templates=['Template OS Windows', 'Template OS Linux'],
-        link_to=['group1', 'group2', 'group3'])
+        link_to=['Linux servers'])
+    print(res)
     #  zapi.hostid_get_by_name(['Zabbix Server'])
