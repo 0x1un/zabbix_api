@@ -1,0 +1,2 @@
+class ZabbixTemplateError(Exception):
+    pass

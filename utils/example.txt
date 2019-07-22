@@ -1,0 +1,14 @@
+添加主机:
+
+	{
+		"jsonrpc":"2.0",
+		"method":"host.create",
+		"params":{
+			"host": "10.10.10.67","interfaces":
+			[{"type": 1,"main": 1,"useip": 1,"ip": "10.10.10.67","dns": "","port": "10050"}],
+			"groups": [{"groupid": "2"}],"templates": [{"templateid": "10087"}]
+			},
+		"auth":"dbcd2bd8abc0f0320fffab34c6d749d3",
+		"id":1,
+	}
+
