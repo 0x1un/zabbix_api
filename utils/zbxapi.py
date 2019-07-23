@@ -188,4 +188,3 @@ if __name__ == '__main__':
         templates=['Template OS Windows', 'Template OS Linux'],
         link_to=['Linux servers'])
     print(res)
-    #  zapi.hostid_get_by_name(['Zabbix Server'])
