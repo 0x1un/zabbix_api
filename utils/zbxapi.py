@@ -6,7 +6,12 @@ from urllib.request import urlopen
 
 class ZabbixApi():
 
-    def __init__(self, url=None, user=None, password=None, version=False):
+    def __init__(self, url=None, user=None, password=None):
+        """
+        @param url: zabbix server的地址
+        @param user: zabbix登录用户名
+        @param password: zabbix登录密码
+        """
         url = url or "http://localhost"
         user = user or "Admin"
         password = password or "zabbix"
